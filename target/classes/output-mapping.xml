@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--该文件为最终输出指标对应的sql语句的赋值的类 。name为collector_kpi，而value为赋值的包名类名-->
+<configuration>
+    <property>
+        <name>collector_new_install_user</name>
+        <value>edu.qianfeng.anlastic.mr.nu.NewInstallCollector</value>
+    </property>
+
+    <property>
+        <name>collector_browser_new_install_user</name>
+        <value>edu.qianfeng.anlastic.mr.nu.BrowserNewInstallCollector</value>
+    </property>
+
+    <property>
+        <name>collector_active_user</name>
+        <value>edu.qianfeng.anlastic.mr.au.ActiveUserCollector</value>
+    </property>
+
+    <property>
+        <name>collector_browser_active_user</name>
+        <value>edu.qianfeng.anlastic.mr.au.ActiveUserCollector</value>
+    </property>
+
+    <property>
+        <name>collector_active_member</name>
+        <value>edu.qianfeng.anlastic.mr.au.ActiveUserCollector</value>
+    </property>
+
+    <property>
+        <name>collector_browser_active_member</name>
+        <value>edu.qianfeng.anlastic.mr.au.ActiveUserCollector</value>
+    </property>
+
+    <property>
+        <name>collector_new_member</name>
+        <value>edu.qianfeng.anlastic.mr.nm.NewMemberCollector</value>
+    </property>
+
+    <property>
+        <name>collector_browser_new_member</name>
+        <value>edu.qianfeng.anlastic.mr.nm.NewMemberCollector</value>
+    </property>
+
+    <property>
+        <name>collector_member_info</name>
+        <value>edu.qianfeng.anlastic.mr.nm.NewMemberCollector</value>
+    </property>
+
+    <property>
+        <name>collector_session</name>
+        <value>edu.qianfeng.anlastic.mr.session.SessionCollector</value>
+    </property>
+
+    <property>
+        <name>collector_browser_session</name>
+        <value>edu.qianfeng.anlastic.mr.session.SessionCollector</value>
+    </property>
+
+    <property>
+        <name>collector_hourly_active_user</name>
+        <value>edu.qianfeng.anlastic.mr.au.HourlyActiveUserCollector</value>
+    </property>
+
+    <property>
+        <name>collector_page_view</name>
+        <value>edu.qianfeng.anlastic.mr.pv.PageViewCollector</value>
+    </property>
+
+    <property>
+        <name>collector_location</name>
+        <value>edu.qianfeng.anlastic.mr.local.LocationCollector</value>
+    </property>
+
+</configuration>
