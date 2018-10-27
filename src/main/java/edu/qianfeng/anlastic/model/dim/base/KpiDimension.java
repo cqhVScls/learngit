@@ -8,11 +8,11 @@ import java.io.IOException;
  * Created by lyd on 2018/5/31.
  * kpi的维度类
  */
-public class KpiDimension extends BaseDimension{
+public class KpiDimension extends BaseDimension {
     private int id;
     private String kpiName;
 
-    public KpiDimension(){
+    public KpiDimension() {
 
     }
 
@@ -34,13 +34,13 @@ public class KpiDimension extends BaseDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(o == this){
+        if (o == this) {
             return 0;
         }
-        KpiDimension other = (KpiDimension)o;
+        KpiDimension other = (KpiDimension) o;
         int tmp = this.id - other.id;
-        if(tmp != 0){
-            return  tmp;
+        if (tmp != 0) {
+            return tmp;
         }
         return this.kpiName.compareTo(other.kpiName);
     }

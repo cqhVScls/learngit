@@ -16,6 +16,7 @@ import java.sql.SQLException;
 public interface IOuputCollector {
     /**
      * 操作结果表的sql的赋值
+     *
      * @param conf
      * @param key
      * @param value
@@ -25,5 +26,5 @@ public interface IOuputCollector {
      * @throws SQLException
      */
     void collect(Configuration conf, BaseDimension key, BaseStatsValueWritable value,
-                 PreparedStatement ps, IDimensionConvertor convertor) throws IOException,SQLException;
+                 PreparedStatement ps, IDimensionConvertor convertor) throws IOException, SQLException;
 }

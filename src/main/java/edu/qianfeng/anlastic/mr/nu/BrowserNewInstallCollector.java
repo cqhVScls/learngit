@@ -19,22 +19,22 @@ import java.sql.SQLException;
  * Created by lyd on 2018/6/4.
  * 为浏览器模块新增用户的sql进行赋值
  */
-public class BrowserNewInstallCollector implements IOuputCollector{
+public class BrowserNewInstallCollector implements IOuputCollector {
     @Override
     public void collect(Configuration conf, BaseDimension key,
                         BaseStatsValueWritable value, PreparedStatement ps,
                         IDimensionConvertor convertor) throws IOException, SQLException {
-        StatsUserDimension statsUserDimension = (StatsUserDimension)key;
-        IntWritable newInstallUsers = (IntWritable)((MapWritableValue)value).getValue().get(new IntWritable(-1));
+        StatsUserDimension statsUserDimension = (StatsUserDimension) key;
+        IntWritable newInstallUsers = (IntWritable) ((MapWritableValue) value).getValue().get(new IntWritable(-1));
         int i = 0;
-        if(value.getKpi().equals(KpiType.BROWSER_NEW_INSTALL_USER)){
+        if (value.getKpi().equals(KpiType.BROWSER_NEW_INSTALL_USER)) {
             //设置值
-            ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
-            ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
-            ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getBrowser()));
-            ps.setInt(++i,newInstallUsers.get());
-            ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
-            ps.setInt(++i,newInstallUsers.get());
+            ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
+            ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
+            ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getBrowser()));
+            ps.setInt(++i, newInstallUsers.get());
+            ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+            ps.setInt(++i, newInstallUsers.get());
             //加载到bathc中
             ps.addBatch();
         }

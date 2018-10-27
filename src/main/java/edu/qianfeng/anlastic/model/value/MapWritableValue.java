@@ -12,11 +12,11 @@ import java.io.IOException;
  * Created by lyd on 2018/5/31.
  * reduce阶段输出的value类型
  */
-public class MapWritableValue extends BaseStatsValueWritable{
+public class MapWritableValue extends BaseStatsValueWritable {
     private MapWritable value = new MapWritable();
     private KpiType kpi;
 
-    public MapWritableValue(){
+    public MapWritableValue() {
     }
 
     public MapWritableValue(MapWritable value, KpiType kpi) {
@@ -27,13 +27,13 @@ public class MapWritableValue extends BaseStatsValueWritable{
     @Override
     public void write(DataOutput out) throws IOException {
         this.value.write(out);  //注意mapWritable的类型的序列化
-        WritableUtils.writeEnum(out,this.kpi); //枚举类型的序列化
+        WritableUtils.writeEnum(out, this.kpi); //枚举类型的序列化
     }
 
     @Override
     public void readFields(DataInput in) throws IOException {
         this.value.readFields(in);
-        WritableUtils.readEnum(in,KpiType.class);
+        WritableUtils.readEnum(in, KpiType.class);
     }
 
     @Override

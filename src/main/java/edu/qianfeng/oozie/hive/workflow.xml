@@ -1,0 +1,40 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="hive-wf">
+    <start to="en-sh"/>
+    <action name="en-sh">
+        <shell xmlns="uri:oozie:shell-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>en.sh</exec>
+            <argument>-sd</argument>
+            <argument>${start_date}</argument>
+            <argument>-ed</argument>
+            <argument>${end_date}</argument>
+            <file>en.sh</file>
+            <capture-output/>
+        </shell>
+        <ok to="vd-sh"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="vd-sh">
+        <shell xmlns="uri:oozie:shell-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>vd.sh</exec>
+            <argument>-sd</argument>
+            <argument>${start_date}</argument>
+            <argument>-ed</argument>
+            <argument>${end_date}</argument>
+            <file>vd.sh</file>
+            <capture-output/>
+        </shell>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Shell action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="end"/>
+</workflow-app>

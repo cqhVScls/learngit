@@ -13,12 +13,12 @@ import java.util.List;
  * Created by lyd on 2018/5/31.
  * 创建浏览器维度类
  */
-public class BrowserDimension extends BaseDimension{
+public class BrowserDimension extends BaseDimension {
     private int id;
     private String browserName;
     private String browserVersion;
 
-    public BrowserDimension(){
+    public BrowserDimension() {
     }
 
     public BrowserDimension(String browserName, String browserVersion) {
@@ -26,18 +26,19 @@ public class BrowserDimension extends BaseDimension{
         this.browserVersion = browserVersion;
     }
 
-    public BrowserDimension(int id,String browserName, String browserVersion) {
-        this(browserName,browserVersion);
+    public BrowserDimension(int id, String browserName, String browserVersion) {
+        this(browserName, browserVersion);
         this.id = id;
     }
 
     /**
      * 获取当前对象的一个实例
+     *
      * @param browserName
      * @param browserVersion
      * @return
      */
-    public static BrowserDimension newInstance(String browserName, String browserVersion){
+    public static BrowserDimension newInstance(String browserName, String browserVersion) {
         BrowserDimension bd = new BrowserDimension();
         bd.browserName = browserName;
         bd.browserVersion = browserVersion;
@@ -46,16 +47,17 @@ public class BrowserDimension extends BaseDimension{
 
     /**
      * 获取浏览器对象的维度集合对象
+     *
      * @param browserName
      * @param browserVersion
      * @return
      */
-    public static List<BrowserDimension> buildList(String browserName, String browserVersion){
-        if(StringUtils.isEmpty(browserName)){
+    public static List<BrowserDimension> buildList(String browserName, String browserVersion) {
+        if (StringUtils.isEmpty(browserName)) {
             browserName = GlobalConstants.DEFAULT_VALUE;
             browserVersion = GlobalConstants.DEFAULT_VALUE;
         }
-        if(StringUtils.isEmpty(browserVersion)){
+        if (StringUtils.isEmpty(browserVersion)) {
             browserVersion = GlobalConstants.DEFAULT_VALUE;
         }
         List<BrowserDimension> li = new ArrayList<BrowserDimension>();
@@ -65,9 +67,9 @@ public class BrowserDimension extends BaseDimension{
         //chrom all
         //chrom 12.10.11
         //chrom all
-        li.add(newInstance(browserName,browserVersion));
-        li.add(newInstance(browserName,GlobalConstants.ALL_OF_VALUE));
-        return  li;
+        li.add(newInstance(browserName, browserVersion));
+        li.add(newInstance(browserName, GlobalConstants.ALL_OF_VALUE));
+        return li;
     }
 
     @Override
@@ -86,12 +88,12 @@ public class BrowserDimension extends BaseDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(this == o){
+        if (this == o) {
             return 0;
         }
         BrowserDimension other = (BrowserDimension) o;
         int tmp = this.browserName.compareTo(other.browserName);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         return this.browserVersion.compareTo(other.browserVersion);

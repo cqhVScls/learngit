@@ -11,11 +11,11 @@ import java.io.IOException;
  * Created by lyd on 2018/6/6.
  * 用于地域维度的模块的map阶段输出的key的类型
  */
-public class StatsLocationDimension extends StatsDimension{
+public class StatsLocationDimension extends StatsDimension {
     private StatsCommonDimension statsCommonDimension = new StatsCommonDimension();
     private LocationDiemension locationDiemension = new LocationDiemension();
 
-    public StatsLocationDimension(){
+    public StatsLocationDimension() {
     }
 
     public StatsLocationDimension(StatsCommonDimension statsCommonDimension, LocationDiemension locationDiemension) {
@@ -25,14 +25,15 @@ public class StatsLocationDimension extends StatsDimension{
 
     /**
      * 克隆当前对象的一个实例
+     *
      * @param dimension
      * @return
      */
-    public static StatsLocationDimension clone(StatsLocationDimension dimension){
+    public static StatsLocationDimension clone(StatsLocationDimension dimension) {
         StatsCommonDimension statsCommonDimension = StatsCommonDimension.clone(dimension.statsCommonDimension);
         LocationDiemension locationDiemension = new LocationDiemension(dimension.locationDiemension.getCountry(),
-                dimension.locationDiemension.getProvince(),dimension.locationDiemension.getCity());
-        return new StatsLocationDimension(statsCommonDimension,locationDiemension);
+                dimension.locationDiemension.getProvince(), dimension.locationDiemension.getCity());
+        return new StatsLocationDimension(statsCommonDimension, locationDiemension);
     }
 
     @Override
@@ -49,12 +50,12 @@ public class StatsLocationDimension extends StatsDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(o == this){
+        if (o == this) {
             return 0;
         }
         StatsLocationDimension other = (StatsLocationDimension) o;
         int tmp = this.statsCommonDimension.compareTo(other.statsCommonDimension);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         return this.locationDiemension.compareTo(other.locationDiemension);

@@ -1,0 +1,27 @@
+<workflow-app name='anlstic' xmlns="uri:oozie:workflow:0.3">
+    <start to="sub-workflow-anlstic-mr"/>
+
+    <action name="sub-workflow-anlstic-mr">
+        <sub-workflow>
+            <app-path>${nameNode}${anlastic_path}/mr</app-path>
+            <propagete-configuration/>
+        </sub-workflow>
+        <ok to="sub-workflow-anlstic-hive"/>
+        <error to="kill"/>
+    </action>
+
+    <action name="sub-workflow-anlstic-hive">
+        <sub-workflow>
+            <app-path>${nameNode}${anlastic_path}/hive</app-path>
+            <propagete-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+
+    <kill name="kill">
+        <message>mapreduce failed, error message:${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+
+    <end name="end"/>
+</workflow-app>

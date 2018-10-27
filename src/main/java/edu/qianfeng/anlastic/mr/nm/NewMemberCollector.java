@@ -20,47 +20,47 @@ import java.sql.SQLException;
  * Created by lyd on 2018/6/4.
  * 为新会员的sql进行赋值
  */
-public class NewMemberCollector implements IOuputCollector{
+public class NewMemberCollector implements IOuputCollector {
     @Override
     public void collect(Configuration conf, BaseDimension key,
                         BaseStatsValueWritable value, PreparedStatement ps,
                         IDimensionConvertor convertor) throws IOException, SQLException {
-        StatsUserDimension statsUserDimension = (StatsUserDimension)key;
+        StatsUserDimension statsUserDimension = (StatsUserDimension) key;
         int i = 0;
         KpiType kpi = value.getKpi();
-        switch (kpi){
+        switch (kpi) {
             case NEW_MEMBER:
-                IntWritable newInstallUsers = (IntWritable)((MapWritableValue)value).getValue().get(new IntWritable(-1));
+                IntWritable newInstallUsers = (IntWritable) ((MapWritableValue) value).getValue().get(new IntWritable(-1));
                 //设置值
-                ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
-                ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
-                ps.setInt(++i,newInstallUsers.get());
-                ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
-                ps.setInt(++i,newInstallUsers.get());
+                ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
+                ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
+                ps.setInt(++i, newInstallUsers.get());
+                ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+                ps.setInt(++i, newInstallUsers.get());
                 break;
             case BROWSER_NEW_MEMBER:
-                newInstallUsers = (IntWritable)((MapWritableValue)value).getValue().get(new IntWritable(-1));
+                newInstallUsers = (IntWritable) ((MapWritableValue) value).getValue().get(new IntWritable(-1));
                 //设置值
-                ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
-                ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
-                ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getBrowser()));
-                ps.setInt(++i,newInstallUsers.get());
-                ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
-                ps.setInt(++i,newInstallUsers.get());
+                ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
+                ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
+                ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getBrowser()));
+                ps.setInt(++i, newInstallUsers.get());
+                ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+                ps.setInt(++i, newInstallUsers.get());
                 break;
 
             case MEMBER_INFO:
-                Text memberId = (Text) ((MapWritableValue)value).getValue().get(new IntWritable(-1));
-                ps.setString(++i,memberId.toString());
-                ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
-                ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
-                ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+                Text memberId = (Text) ((MapWritableValue) value).getValue().get(new IntWritable(-1));
+                ps.setString(++i, memberId.toString());
+                ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+                ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+                ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
                 break;
 
             default:
-              throw  new RuntimeException("该类型的kpi暂时不支持赋值.");
-            }
-            //加载到bathc中
-            ps.addBatch();
+                throw new RuntimeException("该类型的kpi暂时不支持赋值.");
+        }
+        //加载到bathc中
+        ps.addBatch();
     }
 }

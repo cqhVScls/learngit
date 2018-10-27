@@ -9,10 +9,12 @@ edu\qianfeng\common\EventLogConstant$EventEnum.class
 edu\qianfeng\anlastic\model\dim\StatsCommonDimension.class
 edu\qianfeng\anlastic\mr\AnlasticOutputFormat.class
 edu\qianfeng\anlastic\mr\nm\NewMemberRunner.class
+edu\qianfeng\anlastic\hive\CurrencyTypeDimensionUdf.class
 edu\qianfeng\etl\ip\IPSeeker$IPEntry.class
 edu\qianfeng\anlastic\model\dim\base\BaseDimension.class
 edu\qianfeng\anlastic\mr\nm\NewMemberMapper.class
 edu\qianfeng\anlastic\model\dim\base\DateDimension.class
+edu\qianfeng\anlastic\model\dim\base\PaymentTypeDimension.class
 edu\qianfeng\anlastic\mr\nu\NewInstallUserMapper.class
 edu\qianfeng\anlastic\mr\session\SessionReducer.class
 edu\qianfeng\anlastic\mr\session\SessionMapper.class
@@ -54,6 +56,7 @@ edu\qianfeng\anlastic\model\dim\base\PlatformDimension.class
 edu\qianfeng\util\MemberUtil.class
 edu\qianfeng\anlastic\mr\pv\PageViewMapper.class
 edu\qianfeng\anlastic\service\impl\IDimensionConvertorImpl.class
+edu\qianfeng\anlastic\hive\TotalAmountUdf.class
 edu\qianfeng\anlastic\mr\nu\NewInstallCollector.class
 edu\qianfeng\anlastic\mr\au\ActiveUserReducer.class
 edu\qianfeng\etl\tohbase\LogDataToHbaseMapper.class
@@ -61,6 +64,7 @@ edu\qianfeng\anlastic\mr\nu\BrowserNewInstallCollector.class
 edu\qianfeng\anlastic\mr\au\ActiveUserCollector.class
 edu\qianfeng\anlastic\service\IDimensionConvertor.class
 edu\qianfeng\anlastic\mr\AnlasticOutputFormat$AnlasticRecordWriter.class
+edu\qianfeng\anlastic\model\dim\base\CurrencyTypeDimension.class
 edu\qianfeng\anlastic\mr\local\LocationReducer.class
 edu\qianfeng\anlastic\model\dim\StatsDimension.class
 edu\qianfeng\anlastic\mr\local\LocationRunner.class
@@ -70,6 +74,7 @@ edu\qianfeng\anlastic\mr\pv\PageViewCollector.class
 edu\qianfeng\anlastic\mr\pv\PageViewReducer.class
 edu\qianfeng\common\GlobalConstants.class
 edu\qianfeng\anlastic\mr\session\SessionRunner.class
+edu\qianfeng\anlastic\hive\PaymentTypeDimensionUdf.class
 edu\qianfeng\anlastic\service\impl\IDimensionConvertorImpl$1.class
 edu\qianfeng\anlastic\mr\pv\PageViewRunner.class
 edu\qianfeng\util\TimeUtil.class

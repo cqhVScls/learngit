@@ -5,23 +5,27 @@
 
     <groupId>edu.qianfeng</groupId>
     <artifactId>GP1704_AnlaysticLog</artifactId>
+    <packaging>pom</packaging>
     <version>0.1</version>
+    <modules>
+        <!-- <module>../txkt-javasdk</module>-->
+    </modules>
     <modelVersion>4.0.0</modelVersion>
 
 
     <!-- nexus私服配置 -->
     <repositories>
-    <repository>
-        <id>nexus</id>
-        <name>Nexus Repository</name>
-        <url>http://10.0.88.249:8081/nexus/content/groups/public/</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </repository>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repository</name>
+            <url>http://10.0.88.249:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <dependencies>

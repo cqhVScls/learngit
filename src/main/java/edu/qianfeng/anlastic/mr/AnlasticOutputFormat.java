@@ -24,22 +24,23 @@ import java.util.Map;
  * Created by lyd on 2018/6/1.
  * 自定义mysql的输出格式
  */
-public class AnlasticOutputFormat extends OutputFormat<BaseDimension,BaseStatsValueWritable>{
-   private static final Logger logger = Logger.getLogger(AnlasticOutputFormat.class);
+public class AnlasticOutputFormat extends OutputFormat<BaseDimension, BaseStatsValueWritable> {
+    private static final Logger logger = Logger.getLogger(AnlasticOutputFormat.class);
 
     /**
      * 用于封装 recordWriter
      */
-    public static class AnlasticRecordWriter extends RecordWriter<BaseDimension,BaseStatsValueWritable>{
+    public static class AnlasticRecordWriter extends RecordWriter<BaseDimension, BaseStatsValueWritable> {
         private Connection conn = null;
         private Configuration conf = null;
         private IDimensionConvertor convert = null;
         //存储指标-ps
-        private Map<KpiType,PreparedStatement> cache = new HashMap<KpiType,PreparedStatement>();
+        private Map<KpiType, PreparedStatement> cache = new HashMap<KpiType, PreparedStatement>();
         //指标-数量
-        private Map<KpiType,Integer> batch = new HashMap<KpiType,Integer>();
+        private Map<KpiType, Integer> batch = new HashMap<KpiType, Integer>();
 
-        public AnlasticRecordWriter(){}
+        public AnlasticRecordWriter() {
+        }
 
         public AnlasticRecordWriter(Connection conn, Configuration conf, IDimensionConvertor convert) {
             this.conn = conn;
@@ -49,6 +50,7 @@ public class AnlasticOutputFormat extends OutputFormat<BaseDimension,BaseStatsVa
 
         /**
          * 写数据
+         *
          * @param key
          * @param value
          * @throws IOException
@@ -56,7 +58,7 @@ public class AnlasticOutputFormat extends OutputFormat<BaseDimension,BaseStatsVa
          */
         @Override
         public void write(BaseDimension key, BaseStatsValueWritable value) throws IOException, InterruptedException {
-            if(key == null || value == null){
+            if (key == null || value == null) {
                 return;
             }
 
@@ -65,66 +67,66 @@ public class AnlasticOutputFormat extends OutputFormat<BaseDimension,BaseStatsVa
                 int count = 0;
                 KpiType kpi = value.getKpi();
                 //判断cache中是否有对应的ps
-                if(this.cache.containsKey(kpi)){
+                if (this.cache.containsKey(kpi)) {
                     ps = this.cache.get(kpi);
                     count = this.batch.get(kpi);
                 } else {
                     ps = conn.prepareStatement(conf.get(kpi.kpiName));  //sql存储到conf中
                     //install_user "insert into ..........."
                     //将其设置缓存中
-                    this.cache.put(kpi,ps);
+                    this.cache.put(kpi, ps);
                 }
 
                 //不管是否有还是没有，都将批量batch更新
-                count ++ ;
-                batch.put(kpi,count);
+                count++;
+                batch.put(kpi, count);
 
                 //为每一个redcuce的对应的kpi指标的ps进行赋值
                 //collector_install_user edu.qianfeng.anlastic.mr.....;
-                String collectorName = conf.get(GlobalConstants.OUTPUT_COLLECTOR_PREFIX+kpi.kpiName);
+                String collectorName = conf.get(GlobalConstants.OUTPUT_COLLECTOR_PREFIX + kpi.kpiName);
                 Class<?> classz = Class.forName(collectorName);  //将collectorName这一串 字符串转换成对应的类
-                IOuputCollector collector = (IOuputCollector)classz.newInstance();
+                IOuputCollector collector = (IOuputCollector) classz.newInstance();
                 //使用IOuputCollector接口对对应的kpi进行赋值
-                collector.collect(conf,key,value,ps,convert);
+                collector.collect(conf, key, value, ps, convert);
 
                 //判断batch是否可以批量执行
-                if(count % GlobalConstants.BATCH_DEFULT_NUMBER == 0){
+                if (count % GlobalConstants.BATCH_DEFULT_NUMBER == 0) {
                     ps.executeBatch();
                     //conn.commit();
                     batch.remove(kpi);
                 }
 
             } catch (SQLException e) {
-                logger.warn("为reducer的指标对应的sql赋值时sql异常",e);
+                logger.warn("为reducer的指标对应的sql赋值时sql异常", e);
             } catch (ClassNotFoundException e) {
-                logger.warn("为reducer的指标对应的sql赋值时类为未现异常",e);
+                logger.warn("为reducer的指标对应的sql赋值时类为未现异常", e);
             } catch (InstantiationException e) {
-                logger.warn("为reducer的指标对应的sql赋值时获取实例异常",e);
+                logger.warn("为reducer的指标对应的sql赋值时获取实例异常", e);
             } catch (IllegalAccessException e) {
-                logger.warn("为reducer的指标对应的sql赋值时非法处理异常",e);
+                logger.warn("为reducer的指标对应的sql赋值时非法处理异常", e);
             }
         }
 
         @Override
         public void close(TaskAttemptContext context) throws IOException, InterruptedException {
             try {
-                for (Map.Entry<KpiType,PreparedStatement> entry:this.cache.entrySet()) {
+                for (Map.Entry<KpiType, PreparedStatement> entry : this.cache.entrySet()) {
                     entry.getValue().executeBatch();
                 }
             } catch (SQLException e) {
-               logger.warn("在关闭mysql相关对象时只能够executbatch方法异常",e);
+                logger.warn("在关闭mysql相关对象时只能够executbatch方法异常", e);
             } finally {
-                if(conn != null){
+                if (conn != null) {
                     try {
                         conn.commit();
                     } catch (SQLException e) {
                         //do nothning
                     } finally {
-                        for (Map.Entry<KpiType,PreparedStatement> entry:this.cache.entrySet()) {
-                            JDBCUtil.close(null,entry.getValue(),null);
+                        for (Map.Entry<KpiType, PreparedStatement> entry : this.cache.entrySet()) {
+                            JDBCUtil.close(null, entry.getValue(), null);
                         }
                         //最后关闭掉conn
-                        JDBCUtil.close(conn,null,null);
+                        JDBCUtil.close(conn, null, null);
                     }
                 }
             }
@@ -137,7 +139,7 @@ public class AnlasticOutputFormat extends OutputFormat<BaseDimension,BaseStatsVa
         Configuration conf = context.getConfiguration();
         Connection conn = JDBCUtil.getconn();
         IDimensionConvertor convertor = new IDimensionConvertorImpl();
-        return new AnlasticRecordWriter(conn,conf,convertor);
+        return new AnlasticRecordWriter(conn, conf, convertor);
     }
 
     @Override
@@ -147,6 +149,6 @@ public class AnlasticOutputFormat extends OutputFormat<BaseDimension,BaseStatsVa
 
     @Override
     public OutputCommitter getOutputCommitter(TaskAttemptContext context) throws IOException, InterruptedException {
-        return new FileOutputCommitter(FileOutputFormat.getOutputPath(context),context);
+        return new FileOutputCommitter(FileOutputFormat.getOutputPath(context), context);
     }
 }

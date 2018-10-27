@@ -13,13 +13,13 @@ import java.util.List;
  * Created by lyd on 2018/6/6.
  * 地域维度类
  */
-public class LocationDiemension extends BaseDimension{
+public class LocationDiemension extends BaseDimension {
     private int id;
     private String country;
     private String province;
     private String city;
 
-    public LocationDiemension(){
+    public LocationDiemension() {
     }
 
     public LocationDiemension(String country, String province, String city) {
@@ -28,32 +28,33 @@ public class LocationDiemension extends BaseDimension{
         this.city = city;
     }
 
-    public LocationDiemension(int id,String country, String province, String city) {
-      this(country,province, city);
+    public LocationDiemension(int id, String country, String province, String city) {
+        this(country, province, city);
         this.id = id;
     }
 
     /**
      * 返回地域维度的集合对象
+     *
      * @param country
      * @param province
      * @param city
      * @return
      */
-    public static List<LocationDiemension> buildList(String country, String province, String city){
-        if(StringUtils.isEmpty(country)){
+    public static List<LocationDiemension> buildList(String country, String province, String city) {
+        if (StringUtils.isEmpty(country)) {
             country = province = city = GlobalConstants.DEFAULT_VALUE;
         }
-        if(StringUtils.isEmpty(province)){
+        if (StringUtils.isEmpty(province)) {
             province = city = GlobalConstants.DEFAULT_VALUE;
         }
-        if(StringUtils.isEmpty(city)){
+        if (StringUtils.isEmpty(city)) {
             city = GlobalConstants.DEFAULT_VALUE;
         }
 
         List<LocationDiemension> li = new ArrayList<LocationDiemension>();
-        li.add(new LocationDiemension(country,province,city));
-        li.add(new LocationDiemension(country,province,GlobalConstants.ALL_OF_VALUE));
+        li.add(new LocationDiemension(country, province, city));
+        li.add(new LocationDiemension(country, province, GlobalConstants.ALL_OF_VALUE));
         return li;
     }
 
@@ -70,26 +71,26 @@ public class LocationDiemension extends BaseDimension{
     public void readFields(DataInput in) throws IOException {
         this.id = in.readInt();
         this.country = in.readUTF();
-        this.province  = in.readUTF();
+        this.province = in.readUTF();
         this.city = in.readUTF();
     }
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(this == o){
+        if (this == o) {
             return 0;
         }
         LocationDiemension other = (LocationDiemension) o;
         int tmp = this.id - other.id;
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         tmp = this.country.compareTo(other.country);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         tmp = this.province.compareTo(other.province);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         tmp = this.city.compareTo(other.city);

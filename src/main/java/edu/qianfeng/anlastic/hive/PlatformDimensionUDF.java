@@ -13,21 +13,22 @@ import java.io.IOException;
  * Created by lyd on 2018/6/7.
  * 平台维度的udf
  */
-public class PlatformDimensionUDF extends UDF{
+public class PlatformDimensionUDF extends UDF {
 
     private IDimensionConvertor convert = null;
 
-    public PlatformDimensionUDF(){
+    public PlatformDimensionUDF() {
         this.convert = new IDimensionConvertorImpl();
     }
 
     /**
      * 根据category,action获取事件维度的id
+     *
      * @param platformName
      * @return
      */
-    public int evaluate(String platformName){
-        if(StringUtils.isEmpty(platformName)){
+    public int evaluate(String platformName) {
+        if (StringUtils.isEmpty(platformName)) {
             platformName = GlobalConstants.DEFAULT_VALUE;
         }
         PlatformDimension dimension = new PlatformDimension(platformName);

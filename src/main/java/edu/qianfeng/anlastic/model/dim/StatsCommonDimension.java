@@ -12,12 +12,12 @@ import java.io.IOException;
 /**
  * Created by lyd on 2018/5/31.
  */
-public class StatsCommonDimension extends StatsDimension{
+public class StatsCommonDimension extends StatsDimension {
     private DateDimension dateDimension = new DateDimension();
     private PlatformDimension platformDimension = new PlatformDimension();
     private KpiDimension kpiDimension = new KpiDimension();
 
-    public StatsCommonDimension(){
+    public StatsCommonDimension() {
     }
 
     public StatsCommonDimension(DateDimension dateDimension, PlatformDimension platformDimension, KpiDimension kpiDimension) {
@@ -28,17 +28,18 @@ public class StatsCommonDimension extends StatsDimension{
 
     /**
      * 克隆一个当前类的实例
+     *
      * @param dimension
      * @return
      */
-    public static StatsCommonDimension clone(StatsCommonDimension dimension){
+    public static StatsCommonDimension clone(StatsCommonDimension dimension) {
         DateDimension date = new DateDimension(dimension.dateDimension.getYear(),
-                dimension.dateDimension.getSeason(),dimension.dateDimension.getMonth(),
-                dimension.dateDimension.getWeek(),dimension.dateDimension.getDay(),
-                dimension.dateDimension.getType(),dimension.dateDimension.getCalendar());
+                dimension.dateDimension.getSeason(), dimension.dateDimension.getMonth(),
+                dimension.dateDimension.getWeek(), dimension.dateDimension.getDay(),
+                dimension.dateDimension.getType(), dimension.dateDimension.getCalendar());
         PlatformDimension platform = new PlatformDimension(dimension.platformDimension.getPlatformName());
         KpiDimension kpi = new KpiDimension(dimension.kpiDimension.getKpiName());
-        return new StatsCommonDimension(date,platform,kpi);
+        return new StatsCommonDimension(date, platform, kpi);
     }
 
     @Override
@@ -57,16 +58,16 @@ public class StatsCommonDimension extends StatsDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(this == o){
+        if (this == o) {
             return 0;
         }
         StatsCommonDimension other = (StatsCommonDimension) o;
         int tmp = this.dateDimension.compareTo(other.dateDimension);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         tmp = this.platformDimension.compareTo(other.platformDimension);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         return this.kpiDimension.compareTo(other.kpiDimension);

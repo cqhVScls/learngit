@@ -1,0 +1,55 @@
+<workflow-app xmlns="uri:oozie:workflow:0.3" name="wf-mr">
+    <start to="mr-etl"/>
+    <action name="mr-etl">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.etl.tohbase.LogDAtaToHbaseRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="mr-nu"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-nu">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.nu.NewInstallUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="mr-au"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-au">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.au.ActiveUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="mr-am"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-am">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.am.ActiveMemberRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

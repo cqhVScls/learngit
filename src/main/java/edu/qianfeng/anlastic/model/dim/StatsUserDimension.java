@@ -11,10 +11,11 @@ import java.io.IOException;
  * Created by lyd on 2018/5/31.
  * 用户模块的输出key数据类型
  */
-public class StatsUserDimension extends StatsDimension{
+public class StatsUserDimension extends StatsDimension {
     private StatsCommonDimension statsCommon = new StatsCommonDimension();
     private BrowserDimension browser = new BrowserDimension();
-    public StatsUserDimension(){
+
+    public StatsUserDimension() {
     }
 
     public StatsUserDimension(StatsCommonDimension statsCommonDimension, BrowserDimension browserDimension) {
@@ -24,14 +25,15 @@ public class StatsUserDimension extends StatsDimension{
 
     /**
      * 克隆当前对象一个实例
+     *
      * @param dimension
      * @return
      */
-    public static StatsUserDimension clone(StatsUserDimension dimension){
+    public static StatsUserDimension clone(StatsUserDimension dimension) {
         StatsCommonDimension statsCommon = StatsCommonDimension.clone(dimension.statsCommon);
         BrowserDimension browserDimension = new BrowserDimension(dimension.browser.getBrowserName(),
                 dimension.browser.getBrowserVersion());
-        return new StatsUserDimension(statsCommon,browserDimension);
+        return new StatsUserDimension(statsCommon, browserDimension);
     }
 
 
@@ -49,12 +51,12 @@ public class StatsUserDimension extends StatsDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(this == o){
+        if (this == o) {
             return 0;
         }
         StatsUserDimension other = (StatsUserDimension) o;
         int tmp = this.statsCommon.compareTo(other.statsCommon);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         return this.browser.compareTo(other.browser);

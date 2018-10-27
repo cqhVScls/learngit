@@ -22,7 +22,7 @@ public class GlobalConstants {
 
     public static final String OUTPUT_COLLECTOR_PREFIX = "collector_";
 
-    public static final  int BATCH_DEFULT_NUMBER = 20;
+    public static final int BATCH_DEFULT_NUMBER = 20;
 
     public static final long DAY_OF_MILLSECOND = 86400000;
 }

@@ -5,6 +5,8 @@ E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\nu\Br
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\session\SessionRunner.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\am\ActiveMemberMapper.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\dim\base\LocationDiemension.java
+E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\hive\TotalAmountUdf.java
+E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\hive\CurrencyTypeDimensionUdf.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\hive\DateDimensionUDF.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\etl\tohbase\LogDataToHbaseMapper.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\IOuputCollector.java
@@ -18,6 +20,7 @@ E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\common\KpiType.ja
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\service\impl\IDimensionConvertorImpl.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\au\ActiveUserCollector.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\nm\NewMemberReducer.java
+E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\dim\base\CurrencyTypeDimension.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\local\LocationMapper.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\am\ActiveMemberRunner.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\local\LocationCollector.java
@@ -41,6 +44,7 @@ E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\pv\Pa
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\dim\base\EventDimension.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\dim\StatsCommonDimension.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\nu\NewInstallUserMapper.java
+E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\dim\base\PaymentTypeDimension.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\dim\StatsUserDimension.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\pv\PageViewCollector.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\nu\NewInstallCollector.java
@@ -61,6 +65,7 @@ E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\sessi
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\nm\NewMemberRunner.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\hive\PlatformDimensionUDF.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\value\LocationOutputWritableValue.java
+E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\hive\PaymentTypeDimensionUdf.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\model\value\BaseStatsValueWritable.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\am\ActiveMemberReducer.java
 E:\IDEAProjects\GP1704_AnlaysticLog\src\main\java\edu\qianfeng\anlastic\mr\nu\NewInstallUserReducer.java

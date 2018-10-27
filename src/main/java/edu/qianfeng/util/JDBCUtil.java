@@ -17,32 +17,34 @@ public class JDBCUtil {
         try {
             Class.forName(GlobalConstants.DRIVER);
         } catch (ClassNotFoundException e) {
-            logger.warn("获取驱动类失败",e);
+            logger.warn("获取驱动类失败", e);
         }
     }
 
     /**
      * 获取conn
+     *
      * @return
      */
-    public static Connection getconn(){
+    public static Connection getconn() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(GlobalConstants.URL,GlobalConstants.USERNAME,GlobalConstants.PASSWORD);
+            conn = DriverManager.getConnection(GlobalConstants.URL, GlobalConstants.USERNAME, GlobalConstants.PASSWORD);
         } catch (SQLException e) {
-            logger.warn("获取连接connection异常",e);
+            logger.warn("获取连接connection异常", e);
         }
         return conn;
     }
 
     /**
      * 关闭所有与mysql有关的对象
+     *
      * @param conn
      * @param ps
      * @param rs
      */
-    public static void close(Connection conn, PreparedStatement ps, ResultSet rs){
-        if(conn != null){
+    public static void close(Connection conn, PreparedStatement ps, ResultSet rs) {
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
@@ -50,7 +52,7 @@ public class JDBCUtil {
             }
         }
 
-        if(ps != null){
+        if (ps != null) {
             try {
                 ps.close();
             } catch (SQLException e) {
@@ -58,7 +60,7 @@ public class JDBCUtil {
             }
         }
 
-        if(rs != null){
+        if (rs != null) {
             try {
                 rs.close();
             } catch (SQLException e) {

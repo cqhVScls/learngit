@@ -1,0 +1,75 @@
+<workflow-app xmlns="uri:oozie:workflow:0.3" name="wf-mr">
+    <start to="mr-etl"/>
+    <action name="mr-etl">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.etl.tohbase.LogDAtaToHbaseRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="fk1"/>
+        <error to="fail"/>
+    </action>
+
+    <fork name="fk1">
+        <path start="mr-nu"/>
+        <path start="mr-au"/>
+        <path start="mr-am"/>
+    </fork>
+
+    <action name="mr-nu">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.nu.NewInstallUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="jn1"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-au">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.au.ActiveUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="jn1"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-am">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.am.ActiveMemberRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="jn1"/>
+        <error to="fail"/>
+    </action>
+
+    <join name="jn1" to="pv"></join>
+
+    <action name="pv">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>edu.qianfeng.anlastic.mr.pv.PageViewRunner</main-class>
+            <arg>-d</arg>
+            <arg>${run_date}</arg>
+        </java>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

@@ -21,7 +21,7 @@ import java.util.List;
  * Created by lyd on 2018/6/7.
  * 地域维度
  */
-public class LocationMapper extends TableMapper<StatsLocationDimension,TextOutputValue>{
+public class LocationMapper extends TableMapper<StatsLocationDimension, TextOutputValue> {
     private static final Logger logger = Logger.getLogger(LocationMapper.class);
     private byte[] family = Bytes.toBytes(EventLogConstant.LOG_FAMILY_NAME);
     private StatsLocationDimension k = new StatsLocationDimension();
@@ -32,17 +32,17 @@ public class LocationMapper extends TableMapper<StatsLocationDimension,TextOutpu
     @Override
     protected void map(ImmutableBytesWritable key, Result value, Context context) throws IOException, InterruptedException {
         //重hbase的result中获取统计该指标所需要的字段
-        String serverTime = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_SERVER_TIME)));
-        String uuid = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_UUID)));
-        String sessionId = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_SESSION_ID)));
-        String plaform = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_PLATFORM_NAME)));
-        String country = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_COUNTRY)));
-        String province = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_PROVINCE)));
-        String city = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_CITY)));
+        String serverTime = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_SERVER_TIME)));
+        String uuid = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_UUID)));
+        String sessionId = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_SESSION_ID)));
+        String plaform = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_PLATFORM_NAME)));
+        String country = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_COUNTRY)));
+        String province = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_PROVINCE)));
+        String city = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_CITY)));
 
         //判断该指标的必须字段不能为空
-        if(StringUtils.isBlank(serverTime) || StringUtils.isBlank(uuid) || StringUtils.isEmpty(sessionId) || StringUtils.isBlank(plaform)){
-            logger.warn("serverTime&&memberId&&plaform三者任意一个都不能为空:serverTime:"+serverTime+" uuid:"+uuid+" sessionId:"+sessionId+" platform:"+plaform);
+        if (StringUtils.isBlank(serverTime) || StringUtils.isBlank(uuid) || StringUtils.isEmpty(sessionId) || StringUtils.isBlank(plaform)) {
+            logger.warn("serverTime&&memberId&&plaform三者任意一个都不能为空:serverTime:" + serverTime + " uuid:" + uuid + " sessionId:" + sessionId + " platform:" + plaform);
             return;
         }
 
@@ -55,22 +55,22 @@ public class LocationMapper extends TableMapper<StatsLocationDimension,TextOutpu
         //时间维度
         DateDimension dateDimension = DateDimension.buildDate(longOfTime, DateEnum.DAY); //按天统计
         List<PlatformDimension> platformDimensions = PlatformDimension.buildList(plaform);
-        List<LocationDiemension> locationDiemensions = LocationDiemension.buildList(country,province,city);
+        List<LocationDiemension> locationDiemensions = LocationDiemension.buildList(country, province, city);
 
         //获取statsCommondimension
         StatsCommonDimension statsCommonDimension = this.k.getStatsCommonDimension();
         statsCommonDimension.setDateDimension(dateDimension);
         //设置kpi
         statsCommonDimension.setKpiDimension(localKpi);
-        for (PlatformDimension pl:platformDimensions) {
+        for (PlatformDimension pl : platformDimensions) {
             //设置pl
             statsCommonDimension.setPlatformDimension(pl);
-            for (LocationDiemension local:locationDiemensions) {
+            for (LocationDiemension local : locationDiemensions) {
                 //覆盖kpi维度
 //                statsCommonDimension.setKpiDimension(localKpi);
                 this.k.setStatsCommonDimension(statsCommonDimension);
                 this.k.setLocationDiemension(local);
-                context.write(this.k,this.v);
+                context.write(this.k, this.v);
             }
         }
     }

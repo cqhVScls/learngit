@@ -23,22 +23,22 @@ public class SessionCollector implements IOuputCollector {
     public void collect(Configuration conf, BaseDimension key,
                         BaseStatsValueWritable value, PreparedStatement ps,
                         IDimensionConvertor convertor) throws IOException, SQLException {
-        StatsUserDimension statsUserDimension = (StatsUserDimension)key;
-        IntWritable sessions = (IntWritable)((MapWritableValue)value).getValue().get(new IntWritable(-1));
-        IntWritable sessionsLength = (IntWritable)((MapWritableValue)value).getValue().get(new IntWritable(-2));
+        StatsUserDimension statsUserDimension = (StatsUserDimension) key;
+        IntWritable sessions = (IntWritable) ((MapWritableValue) value).getValue().get(new IntWritable(-1));
+        IntWritable sessionsLength = (IntWritable) ((MapWritableValue) value).getValue().get(new IntWritable(-2));
 
         int i = 0;
         //设置值
-        ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
-        ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
-        if(value.getKpi().equals(KpiType.BROWSER_SESSION)){
-            ps.setInt(++i,convertor.getDimensionIdByValue(((StatsUserDimension) key).getBrowser()));
+        ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getDateDimension()));
+        ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getStatsCommon().getPlatformDimension()));
+        if (value.getKpi().equals(KpiType.BROWSER_SESSION)) {
+            ps.setInt(++i, convertor.getDimensionIdByValue(((StatsUserDimension) key).getBrowser()));
         }
-        ps.setInt(++i,sessions.get());
-        ps.setInt(++i,sessionsLength.get());
-        ps.setString(++i,conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
-        ps.setInt(++i,sessions.get());
-        ps.setInt(++i,sessionsLength.get());
+        ps.setInt(++i, sessions.get());
+        ps.setInt(++i, sessionsLength.get());
+        ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE_FORMAT));
+        ps.setInt(++i, sessions.get());
+        ps.setInt(++i, sessionsLength.get());
         //加载到bathc中
         ps.addBatch();
     }

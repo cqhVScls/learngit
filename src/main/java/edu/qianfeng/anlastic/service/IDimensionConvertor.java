@@ -12,6 +12,7 @@ import java.io.IOException;
 public interface IDimensionConvertor {
     /**
      * 根据维度对象取出对应的维度表的ID值，如没有则插入再查询，如有直接获取ID
+     *
      * @param baseDimension
      * @return
      * @throws IOException

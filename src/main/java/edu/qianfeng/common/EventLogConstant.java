@@ -8,13 +8,13 @@ public class EventLogConstant {
     /**
      * 事件的枚举类型
      */
-    public static enum EventEnum{
-        LAUNCH(1,"launch event","e_l"),
-        PAGEVIEW(2,"page view event","e_pv"),
-        CHARGE_REQUEST(3,"charge request","e_crt"),
-        CHARGE_SUCCESS(4,"charge success","e_cs"),
-        CHARGE_REFUND(5,"charge refund","e_cr"),
-        EVENT(5,"evnet","e_e");
+    public static enum EventEnum {
+        LAUNCH(1, "launch event", "e_l"),
+        PAGEVIEW(2, "page view event", "e_pv"),
+        CHARGE_REQUEST(3, "charge request", "e_crt"),
+        CHARGE_SUCCESS(4, "charge success", "e_cs"),
+        CHARGE_REFUND(5, "charge refund", "e_cr"),
+        EVENT(5, "evnet", "e_e");
 
         public final int id;
         public final String name;
@@ -27,13 +27,14 @@ public class EventLogConstant {
         }
 
         /**
-         *根据alias的别名返回与之对应的枚举
+         * 根据alias的别名返回与之对应的枚举
+         *
          * @param alias
          * @return
          */
-        public static EventEnum valueOfAlias(String alias){
-            for (EventEnum event:values()) {
-                if(alias.equals(event.alias)){
+        public static EventEnum valueOfAlias(String alias) {
+            for (EventEnum event : values()) {
+                if (alias.equals(event.alias)) {
                     return event;
                 }
             }
@@ -65,7 +66,7 @@ public class EventLogConstant {
 
     public static final String LOG_COLUMN_NAME_MEMBER_ID = "u_mid";
 
-    public static final String LOG_COLUMN_NAME_SESSION_ID ="u_sd";
+    public static final String LOG_COLUMN_NAME_SESSION_ID = "u_sd";
 
     public static final String LOG_COLUMN_NAME_CLIENT_TIME = "c_time";
 
@@ -73,7 +74,7 @@ public class EventLogConstant {
 
     public static final String LOG_COLUMN_NAME_USER_AGENT = "b_iev";
 
-    public static final String LOG_COLUMN_NAME_RESOLUTION= "b_rst";
+    public static final String LOG_COLUMN_NAME_RESOLUTION = "b_rst";
 
     public static final String LOG_COLUMN_NAME_CURRENT_URL = "p_url";
 

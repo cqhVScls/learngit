@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by lyd on 2018/6/7.
  * 地域模块的map端输出的value的类
  */
-public class TextOutputValue extends BaseStatsValueWritable{
+public class TextOutputValue extends BaseStatsValueWritable {
     private String uuid;
     private String sessionId;
 

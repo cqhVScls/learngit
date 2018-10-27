@@ -13,11 +13,11 @@ import java.util.List;
  * Created by lyd on 2018/5/31.
  * 平台维度类
  */
-public class PlatformDimension extends BaseDimension{
+public class PlatformDimension extends BaseDimension {
     private int id;
     private String platformName;
 
-    public PlatformDimension(){
+    public PlatformDimension() {
 
     }
 
@@ -25,17 +25,18 @@ public class PlatformDimension extends BaseDimension{
         this.platformName = platformName;
     }
 
-    public PlatformDimension(int id,String platformName) {
+    public PlatformDimension(int id, String platformName) {
         this(platformName);
         this.id = id;
     }
 
     /**
      * 创建平台维度的集合方法
+     *
      * @return
      */
-    public static List<PlatformDimension> buildList(String platformName){
-        if(StringUtils.isEmpty(platformName)){
+    public static List<PlatformDimension> buildList(String platformName) {
+        if (StringUtils.isEmpty(platformName)) {
             platformName = GlobalConstants.DEFAULT_VALUE;
         }
         List<PlatformDimension> li = new ArrayList<PlatformDimension>();
@@ -58,13 +59,13 @@ public class PlatformDimension extends BaseDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(o == this){
+        if (o == this) {
             return 0;
         }
-        PlatformDimension other = (PlatformDimension)o;
+        PlatformDimension other = (PlatformDimension) o;
         int tmp = this.id - other.id;
-        if(tmp != 0){
-            return  tmp;
+        if (tmp != 0) {
+            return tmp;
         }
         return this.platformName.compareTo(other.platformName);
     }

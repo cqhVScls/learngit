@@ -17,30 +17,32 @@ public class UserAgentUtil {
 
     //获取一个usaparser的对象
     public static UASparser uas = null;
+
     //该静态代码块专用于uasparser的初始化
     static {
         try {
             uas = new UASparser(OnlineUpdater.getVendoredInputStream());
         } catch (IOException e) {
-            logger.warn("获取usaparser对象异常",e);
+            logger.warn("获取usaparser对象异常", e);
         }
     }
 
     /**
      * 根据传递过来userAgent解析出其浏览器和操作系统信息
+     *
      * @param userAgent
      * @return
      */
-    public UserAgentInfo getUserAgentInfoByUA(String userAgent){
+    public UserAgentInfo getUserAgentInfoByUA(String userAgent) {
         UserAgentInfo info = null;
-        if(StringUtils.isNotEmpty(userAgent.trim())){
+        if (StringUtils.isNotEmpty(userAgent.trim())) {
             //解析
             cz.mallat.uasparser.UserAgentInfo oinfo = null;
             //使用usaparser解析出来包自带的useragentInfo
             try {
                 oinfo = uas.parse(userAgent);
                 //将oinfo中的属性设置自己的userAgetnInfo中
-                if(oinfo != null){
+                if (oinfo != null) {
                     info = new UserAgentInfo();
                     info.setBrowserName(oinfo.getUaFamily());
                     info.setBrowserVersion(oinfo.getBrowserVersionInfo());
@@ -48,7 +50,7 @@ public class UserAgentUtil {
                     info.setOsVersion(oinfo.getOsName()); //版本
                 }
             } catch (IOException e) {
-                logger.warn("解析userAgent失败",e);
+                logger.warn("解析userAgent失败", e);
             }
         }
         return info;
@@ -57,7 +59,7 @@ public class UserAgentUtil {
     /**
      * 用于封装userAgent对象
      */
-    public static class UserAgentInfo{
+    public static class UserAgentInfo {
         public static String browserName;
         public static String browserVersion;
         public static String osName;
@@ -97,7 +99,7 @@ public class UserAgentUtil {
 
         @Override
         public String toString() {
-            return browserName +":\t"+browserVersion+":\t"+osName+":\t"+osVersion;
+            return browserName + ":\t" + browserVersion + ":\t" + osName + ":\t" + osVersion;
         }
 
     }

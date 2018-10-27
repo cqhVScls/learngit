@@ -81,14 +81,14 @@ public class IPAnalysticUtil extends IPSeeker {
                         case "上海":
                         case "天津":
                         case "重庆":
-                            info.setProvince(flag+"市");
+                            info.setProvince(flag + "市");
                             country = country.substring(3);
                             index = country.indexOf("区");
                             if (index > 0) {
                                 char ch = country.charAt(index - 1);
                                 if (ch != '校' || ch != '军' || ch != '小' || ch != '灯' || ch != '误') {
                                     //设置市
-                                    info.setCity(country.substring(0, index+1));
+                                    info.setCity(country.substring(0, index + 1));
                                 }
                             }
                             index = country.indexOf("县");
@@ -106,14 +106,14 @@ public class IPAnalysticUtil extends IPSeeker {
                     }
                 }
             }
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-            return info;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return info;
+    }
 
     /**
-     * @param url :http://ip.taobao.com/service/getIpInfo.php?ip=171.120.0.1
+     * @param url     :http://ip.taobao.com/service/getIpInfo.php?ip=171.120.0.1
      * @param charset "utf-8"
      * @return
      * @throws Exception
@@ -143,54 +143,55 @@ public class IPAnalysticUtil extends IPSeeker {
         String response = new String(responseBody, "utf-8");
 
         JSONObject jo = JSONObject.parseObject(response);
-        JSONObject j = (JSONObject)jo.get("data");
+        JSONObject j = (JSONObject) jo.get("data");
 
         // 释放连接
         method.releaseConnection();
         //设置省市
         info.setCountry(j.get("country").toString());
         info.setProvince(j.get("region").toString());
-        info.setCity(j.get("city").toString()+"市");
+        info.setCity(j.get("city").toString() + "市");
         return info;
     }
 
 
     /**
-         * 用于封装国家省市的类
-         */
-        public static class RegionInfo {
-            public static final String DEFAULT_VALUE = GlobalConstants.DEFAULT_VALUE; //默认为未知
-            public static String country = DEFAULT_VALUE;//国家
-            public static String province = DEFAULT_VALUE;//省
-            public static String city = DEFAULT_VALUE;//市
+     * 用于封装国家省市的类
+     */
+    public static class RegionInfo {
+        public static final String DEFAULT_VALUE = GlobalConstants.DEFAULT_VALUE; //默认为未知
+        public static String country = DEFAULT_VALUE;//国家
+        public static String province = DEFAULT_VALUE;//省
+        public static String city = DEFAULT_VALUE;//市
 
-            public static void setCountry(String country) {
-                RegionInfo.country = country;
-            }
-
-            public static void setProvince(String province) {
-                RegionInfo.province = province;
-            }
-
-            public static void setCity(String city) {
-                RegionInfo.city = city;
-            }
-
-            public String getCountry() {
-                return country;
-            }
-            public String getProvince() {
-                return province;
-            }
-
-            public String getCity() {
-                return city;
-            }
-
-
-            @Override
-            public String toString() {
-                return "RegionInfo{" + country + "\t" + province + "\t" + city + "}";
-            }
+        public static void setCountry(String country) {
+            RegionInfo.country = country;
         }
+
+        public static void setProvince(String province) {
+            RegionInfo.province = province;
+        }
+
+        public static void setCity(String city) {
+            RegionInfo.city = city;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public String getProvince() {
+            return province;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+
+        @Override
+        public String toString() {
+            return "RegionInfo{" + country + "\t" + province + "\t" + city + "}";
+        }
+    }
 }

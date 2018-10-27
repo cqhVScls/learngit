@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by lyd on 2018/5/31.
  * map阶段输出的value类型
  */
-public class TimeOutputValue extends BaseStatsValueWritable{
+public class TimeOutputValue extends BaseStatsValueWritable {
     private String id; //该id可以泛指u_ud u_mid u_sd
     private long time;
 

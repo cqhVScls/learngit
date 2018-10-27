@@ -25,7 +25,7 @@ import java.util.List;
  * Created by lyd on 2018/6/5.
  * 活跃用户的mapper类    添加按小时计算
  */
-public class ActiveUserMapper extends TableMapper<StatsUserDimension,TimeOutputValue> {
+public class ActiveUserMapper extends TableMapper<StatsUserDimension, TimeOutputValue> {
     private static final Logger logger = Logger.getLogger(ActiveUserMapper.class);
     private StatsUserDimension k = new StatsUserDimension();
     private TimeOutputValue v = new TimeOutputValue();
@@ -38,15 +38,15 @@ public class ActiveUserMapper extends TableMapper<StatsUserDimension,TimeOutputV
     @Override
     protected void map(ImmutableBytesWritable key, Result value, Mapper.Context context) throws IOException, InterruptedException {
         //重hbase的result中获取统计该指标所需要的字段
-        String serverTime = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_SERVER_TIME)));
-        String uuid = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_UUID)));
-        String plaform = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_PLATFORM_NAME)));
-        String browserName = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_BROWSER_NAME)));
-        String browserVersion = Bytes.toString(value.getValue(family,Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_BROWSER_VERSION)));
+        String serverTime = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_SERVER_TIME)));
+        String uuid = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_UUID)));
+        String plaform = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_PLATFORM_NAME)));
+        String browserName = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_BROWSER_NAME)));
+        String browserVersion = Bytes.toString(value.getValue(family, Bytes.toBytes(EventLogConstant.LOG_COLUMN_NAME_BROWSER_VERSION)));
 
         //判断该指标的必须字段不能为空
-        if(StringUtils.isBlank(serverTime) || StringUtils.isBlank(uuid) || StringUtils.isBlank(plaform)){
-            logger.warn("serverTime&&uuid&&plaform三者任意一个都不能为空:serverTime:"+serverTime+" uuid:"+uuid+" platform:"+plaform);
+        if (StringUtils.isBlank(serverTime) || StringUtils.isBlank(uuid) || StringUtils.isBlank(plaform)) {
+            logger.warn("serverTime&&uuid&&plaform三者任意一个都不能为空:serverTime:" + serverTime + " uuid:" + uuid + " platform:" + plaform);
             return;
         }
         //代码到这儿正常处理
@@ -58,35 +58,35 @@ public class ActiveUserMapper extends TableMapper<StatsUserDimension,TimeOutputV
         //时间维度
         DateDimension dateDimension = DateDimension.buildDate(longOfTime, DateEnum.DAY); //按天统计
         List<PlatformDimension> platformDimensions = PlatformDimension.buildList(plaform);
-        List<BrowserDimension> browserDimensions = BrowserDimension.buildList(browserName,browserVersion);
+        List<BrowserDimension> browserDimensions = BrowserDimension.buildList(browserName, browserVersion);
 
         //获取statsCommondimension
         StatsCommonDimension statsCommonDimension = k.getStatsCommon();
         statsCommonDimension.setDateDimension(dateDimension);
 
         //默认一个browserDimension
-        BrowserDimension defaultBrowserDimension = new BrowserDimension("","");
+        BrowserDimension defaultBrowserDimension = new BrowserDimension("", "");
         //输出
-        for (PlatformDimension pl:platformDimensions) {
+        for (PlatformDimension pl : platformDimensions) {
             //设置pl
             statsCommonDimension.setPlatformDimension(pl);
             statsCommonDimension.setKpiDimension(activeUserKpi);
             this.k.setBrowser(defaultBrowserDimension);
             this.k.setStatsCommon(statsCommonDimension);
-            context.write(this.k,this.v);
+            context.write(this.k, this.v);
 
             //按小时统计的指标输出
             statsCommonDimension.setKpiDimension(hourlyActiveUserKpi);
             this.k.setStatsCommon(statsCommonDimension);
-            context.write(this.k,this.v);
+            context.write(this.k, this.v);
 
             //统计浏览器模块新增用户指标
-            for (BrowserDimension browser:browserDimensions) {
+            for (BrowserDimension browser : browserDimensions) {
                 //覆盖kpi维度
                 statsCommonDimension.setKpiDimension(browserActiveUserKpi);
                 this.k.setBrowser(browser);
                 this.k.setStatsCommon(statsCommonDimension);
-                context.write(this.k,this.v);
+                context.write(this.k, this.v);
             }
         }
     }

@@ -7,12 +7,12 @@ import java.io.IOException;
 /**
  * Created by lyd on 2018/6/7.
  */
-public class EventDimension extends BaseDimension{
+public class EventDimension extends BaseDimension {
     private int id;
     private String category;
     private String action;
 
-    public EventDimension(){
+    public EventDimension() {
     }
 
     public EventDimension(String category, String action) {
@@ -36,16 +36,16 @@ public class EventDimension extends BaseDimension{
 
     @Override
     public int compareTo(BaseDimension o) {
-        if(o == this){
-            return  0;
+        if (o == this) {
+            return 0;
         }
-        EventDimension other = (EventDimension)o;
+        EventDimension other = (EventDimension) o;
         int tmp = this.id - other.id;
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         tmp = this.category.compareTo(other.category);
-        if(tmp != 0){
+        if (tmp != 0) {
             return tmp;
         }
         return this.action.compareTo(other.action);
